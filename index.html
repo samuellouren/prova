@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova</title>
+    <link rel="stylesheet" href="./style/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="header_titulo">CalosW API</h1>
+            <section id="form-container" class="form-container">
+                <h2 class="form-container-titulo">Gerenciador de atividades</h2>
+    
+                <form id="form" action="#" method="post">
+                    <input type="text" id="name" class="form_input" placeholder="Digite a tarefa">
+                    <textarea id="descricao" class="form_descricao" placeholder="Descreva a atividade"></textarea>
+                    <button type="submit" class="form_button form_buttoncadastro">Cadastrar</button>
+                </form>
+    
+                <div id="mensagem" class="mensagem">mensagem de retorno</div>
+                
+            </section>
+        </header>
+        <main class="main">
+            <form id="form_pesq" action="#" method="get">
+                <input type="text" id="pesquisa" class="input_pesq" placeholder="Pesquisar atividades">
+                <button type="submit" class="pesq_button pesq_buttonpesq">Pesquisar</button>
+            </form>
+            <section id="list" class="list">
+            </section>
+            
+            
+            
+        </main>
+    </div>
+    <script src="./js/script.js"></script>
+</body>
+</html>

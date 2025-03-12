@@ -1,0 +1,11 @@
+# Ignorar node_modules
+node_modules/
+
+# Ignorar arquivos de build
+dist/
+
+# Ignorar arquivos de configuração do TypeScript
+tsconfig.json
+
+# Ignorar arquivos gerados automaticamente
+coverage/

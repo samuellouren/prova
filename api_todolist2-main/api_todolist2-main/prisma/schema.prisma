@@ -1,0 +1,21 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Tarefa {
+  id        String   @id() @default(uuid())
+  titulo    String
+  descricao String?
+  status    String   @default("PENDENTE")
+  createdAt DateTime @default(now())
+
+  @@map("tarefas")
+}

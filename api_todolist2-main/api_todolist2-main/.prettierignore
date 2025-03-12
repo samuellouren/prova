@@ -1,0 +1,23 @@
+# Ignorar node_modules
+node_modules/
+
+# Ignorar arquivos de build
+dist/
+
+# Ignorar arquivos de configuração do TypeScript
+tsconfig.json
+
+# Ignorar arquivos gerados automaticamente
+coverage/
+
+# Ignorar qualquer arquivo minificado
+*.min.js
+
+# Ignorar arquivos de imagem e binários
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.lock

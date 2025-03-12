@@ -1,0 +1,661 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Tarefas",
+    "version": "1.0.0",
+    "description": "API para gerenciamento de tarefas, incluindo criação, atualização, consulta e exclusão de tarefas."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333",
+      "description": "Servidor local de desenvolvimento"
+    }
+  ],
+  "paths": {
+    "/api/tarefas": {
+      "post": {
+        "summary": "Criar uma nova tarefa",
+        "description": "Cria uma nova tarefa com um título, descrição e status inicial como 'PENDENTE'.",
+        "tags": ["Tarefas"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "titulo": {
+                    "type": "string",
+                    "description": "Título da tarefa",
+                    "example": "Estudar JavaScript"
+                  },
+                  "descricao": {
+                    "type": "string",
+                    "description": "Descrição detalhada da tarefa",
+                    "example": "Estudar sobre APIs em JavaScript"
+                  }
+                },
+                "required": ["titulo"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tarefa criada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID da tarefa criada",
+                      "example": 1
+                    },
+                    "titulo": {
+                      "type": "string",
+                      "description": "Título da tarefa",
+                      "example": "Estudar JavaScript"
+                    },
+                    "descricao": {
+                      "type": "string",
+                      "description": "Descrição da tarefa",
+                      "example": "Estudar sobre APIs em JavaScript"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Status da tarefa",
+                      "example": "PENDENTE"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação no corpo da solicitação.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "err": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Título é obrigatório"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro ao criar tarefa"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar todas as tarefas",
+        "description": "Recupera todas as tarefas, com a possibilidade de paginar os resultados.",
+        "tags": ["Tarefas"],
+        "parameters": [
+          {
+            "name": "pagina",
+            "in": "query",
+            "description": "Número da página para paginar os resultados",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "porPagina",
+            "in": "query",
+            "description": "Número de itens por página",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de tarefas recuperada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "ID da tarefa",
+                        "example": 1
+                      },
+                      "titulo": {
+                        "type": "string",
+                        "description": "Título da tarefa",
+                        "example": "Estudar JavaScript"
+                      },
+                      "descricao": {
+                        "type": "string",
+                        "description": "Descrição da tarefa",
+                        "example": "Estudar sobre APIs em JavaScript"
+                      },
+                      "status": {
+                        "type": "string",
+                        "description": "Status da tarefa",
+                        "example": "PENDENTE"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno ao listar as tarefas.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "err": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro ao listar Tarefas"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tarefas/{id}": {
+      "get": {
+        "summary": "Buscar uma tarefa pelo ID",
+        "description": "Recupera uma tarefa específica pelo seu ID.",
+        "tags": ["Tarefas"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da tarefa",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tarefa encontrada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID da tarefa",
+                      "example": 1
+                    },
+                    "titulo": {
+                      "type": "string",
+                      "description": "Título da tarefa",
+                      "example": "Estudar JavaScript"
+                    },
+                    "descricao": {
+                      "type": "string",
+                      "description": "Descrição da tarefa",
+                      "example": "Estudar sobre APIs em JavaScript"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Status da tarefa",
+                      "example": "PENDENTE"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "err": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "O id é obrigatório"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tarefa não encontrada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "err": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Tarefa não encontrada"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno ao buscar a tarefa.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "err": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro ao buscar tarefa"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar uma tarefa",
+        "description": "Atualiza uma tarefa existente, incluindo título, descrição e status.",
+        "tags": ["Tarefas"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da tarefa",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "titulo": {
+                    "type": "string",
+                    "description": "Título da tarefa",
+                    "example": "Revisar JavaScript"
+                  },
+                  "descricao": {
+                    "type": "string",
+                    "description": "Descrição da tarefa",
+                    "example": "Revisar conceitos de APIs"
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "Status da tarefa",
+                    "example": "PENDENTE"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tarefa atualizada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Mensagem de sucesso",
+                      "example": "Tarefa Atualizada"
+                    },
+                    "tarefaAtualizada": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "ID da tarefa atualizada",
+                          "example": 1
+                        },
+                        "titulo": {
+                          "type": "string",
+                          "description": "Título da tarefa atualizada",
+                          "example": "Revisar JavaScript"
+                        },
+                        "descricao": {
+                          "type": "string",
+                          "description": "Descrição da tarefa atualizada",
+                          "example": "Revisar conceitos de APIs"
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "Status da tarefa atualizada",
+                          "example": "PENDENTE"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação nos dados fornecidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "err": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro ao atualizar tarefa"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno ao atualizar a tarefa.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro ao atualizar tarefa"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir uma tarefa",
+        "description": "Exclui uma tarefa pelo seu ID.",
+        "tags": ["Tarefas"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da tarefa",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Tarefa excluída com sucesso."
+          },
+          "400": {
+            "description": "ID inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "err": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "O id é obrigatório"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno ao excluir a tarefa.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "err": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro ao excluir tarefa"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tarefas/{id}/status": {
+      "put": {
+        "summary": "Atualizar o status de uma tarefa",
+        "description": "Atualiza o status de uma tarefa para o próximo estado possível.",
+        "tags": ["Tarefas"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da tarefa",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status da tarefa atualizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID da tarefa",
+                      "example": 1
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Novo status da tarefa",
+                      "example": "CONCLUÍDO"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "err": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "ID inválido"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tarefa não encontrada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "err": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Tarefa não encontrada"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno ao atualizar o status da tarefa.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro ao atualizar status"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tarefas/situacao/{status}": {
+      "get": {
+        "summary": "Buscar tarefas por status",
+        "description": "Recupera tarefas filtradas por seu status.",
+        "tags": ["Tarefas"],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "description": "Status das tarefas a serem filtradas",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "PENDENTE"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tarefas com o status solicitado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "ID da tarefa",
+                        "example": 1
+                      },
+                      "titulo": {
+                        "type": "string",
+                        "description": "Título da tarefa",
+                        "example": "Estudar JavaScript"
+                      },
+                      "descricao": {
+                        "type": "string",
+                        "description": "Descrição da tarefa",
+                        "example": "Estudar sobre APIs em JavaScript"
+                      },
+                      "status": {
+                        "type": "string",
+                        "description": "Status da tarefa",
+                        "example": "PENDENTE"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Status inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "err": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Status inválido"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno ao buscar tarefas por status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro ao buscar status"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
