@@ -119,6 +119,7 @@ body{
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    margin-top: 1rem;
 }
 
 .card_header{
@@ -198,4 +199,32 @@ body{
 }
 .form_buttoncadastro:hover{
     background-color: #380d8d;
+}
+.mensagem{
+    color: #fff;
+}
+.btn_filter{
+    padding: .5rem 1rem;
+    font-size: .9rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3 ease;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+.btn-todos{
+    background-color: #5419ca;
+    color: #fff;
+    margin-right: 10px;
+}
+.btn-pendentes{
+    background-color: #5419ca;
+    color: #fff;
+    margin-right: 10px;
+}
+.btn-concluidas{
+    background-color: #5419ca;
+    color: #fff;
+    margin-right: 10px;
 }
